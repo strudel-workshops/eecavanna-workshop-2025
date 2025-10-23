@@ -156,6 +156,9 @@ export const SciDataGrid: React.FC<SciDataGridProps> = ({
         '& .MuiDataGrid-overlayWrapper': {
           minHeight: '4rem',
         },
+        '& .MuiDataGrid-row': {
+          cursor: 'pointer',
+        },
       }}
       {...rest}
     />
