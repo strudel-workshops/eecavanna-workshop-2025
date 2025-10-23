@@ -25,13 +25,13 @@ export const DataView: React.FC<DataViewProps> = ({
   const [pageSize, setPageSize] = useState(25);
   const [offset, setOffest] = useState(page * pageSize);
   // CUSTOMIZE: the unique ID field for the data source
-  const dataIdField = 'Id';
+  const dataIdField = 'id';
   // CUSTOMIZE: query mode, 'client' or 'server'
   const queryMode = 'client';
   const { isPending, isFetching, isError, data, error } = useListQuery({
     activeFilters,
     // CUSTOMIZE: the table data source
-    dataSource: 'dummy-data/exoplanets.csv',
+    dataSource: 'data/getUsersResponseBody.json',
     filterConfigs,
     offset,
     page,
@@ -89,39 +89,32 @@ export const DataView: React.FC<DataViewProps> = ({
         // CUSTOMIZE: the table columns
         columns={[
           {
-            field: 'Planet Name',
-            headerName: 'Planet Name',
-            width: 200,
+            field: 'id',
+            headerName: 'ID',
+            width: 100,
           },
           {
-            field: 'Planet Host',
-            headerName: 'Planet Host',
-            width: 200,
+            field: 'firstName',
+            headerName: 'First Name',
+            width: 150,
           },
           {
-            field: 'Discovery Method',
-            headerName: 'Discovery Method',
-            width: 200,
+            field: 'lastName',
+            headerName: 'Last Name',
+            width: 150,
           },
           {
-            field: 'Orbital Period Days',
-            headerName: 'Orbital Period',
-            units: 'days',
-            type: 'number',
-            width: 200,
+            field: 'emailAddr',
+            headerName: 'Email Address',
+            width: 250,
           },
           {
-            field: 'Mass',
-            headerName: 'Mass',
-            units: 'Earth Mass',
-            type: 'number',
+            field: 'roleNames',
+            headerName: 'Roles',
             width: 200,
-          },
-          {
-            field: 'Eccentricity',
-            headerName: 'Eccentricity',
-            type: 'number',
-            width: 200,
+            valueGetter: (params: any) => {
+              return Array.isArray(params) ? params.join(', ') : params;
+            },
           },
         ]}
         disableColumnSelector

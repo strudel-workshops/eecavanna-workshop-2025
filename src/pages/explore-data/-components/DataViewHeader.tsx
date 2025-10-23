@@ -31,7 +31,7 @@ export const DataViewHeader: React.FC<DataViewHeaderProps> = ({
       }}
     >
       <Typography variant="h6" component="h2" flex={1}>
-        Entity List
+        Users
       </Typography>
       <Button startIcon={<FilterListIcon />} onClick={onToggleFiltersPanel}>
         Filters

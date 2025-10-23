@@ -16,51 +16,21 @@ export const Route = createFileRoute('/explore-data/')({
 // CUSTOMIZE: the filter definitions
 const filterConfigs: FilterConfig[] = [
   {
-    field: 'Discovery Method',
-    label: 'Discovery Method',
+    field: 'roleNames',
+    label: 'Role',
     operator: 'contains-one-of',
     filterComponent: 'CheckboxList',
     filterProps: {
       options: [
         {
-          label: 'Astrometry',
-          value: 'Astrometry',
+          label: 'User',
+          value: 'user',
         },
         {
-          label: 'Disk Kinematics',
-          value: 'Disk Kinematics',
-        },
-        {
-          label: 'Eclipse Timing Variations',
-          value: 'Eclipse Timing Variations',
-        },
-        {
-          label: 'Imaging',
-          value: 'Imaging',
-        },
-        {
-          label: 'Microlensing',
-          value: 'Microlensing',
-        },
-        {
-          label: 'Radial Velocity',
-          value: 'Radial Velocity',
-        },
-        {
-          label: 'Transit',
-          value: 'Transit',
+          label: 'Admin',
+          value: 'admin',
         },
       ],
-    },
-  },
-  {
-    field: 'Mass',
-    label: 'Mass',
-    operator: 'between-inclusive',
-    filterComponent: 'RangeSlider',
-    filterProps: {
-      min: 0,
-      max: 10000,
     },
   },
 ];
@@ -92,9 +62,9 @@ function DataExplorer() {
       <Box>
         <PageHeader
           // CUSTOMIZE: the page title
-          pageTitle="Explore Data App"
+          pageTitle="User Management"
           // CUSTOMIZE: the page description
-          description="Description of this app"
+          description="Browse and manage system users"
           sx={{
             marginBottom: 1,
             padding: 2,
