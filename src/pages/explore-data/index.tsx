@@ -44,6 +44,7 @@ function DataExplorer() {
   const [searchTerm, setSearchTerm] = useState('');
   const [previewItem, setPreviewItem] = useState<any>();
   const [showFiltersPanel, setShowFiltersPanel] = useState(true);
+  const [refetchData, setRefetchData] = useState<(() => void) | null>(null);
 
   const handleCloseFilters = () => {
     setShowFiltersPanel(false);
@@ -55,6 +56,10 @@ function DataExplorer() {
 
   const handleClosePreview = () => {
     setPreviewItem(null);
+  };
+
+  const handleRefetchReady = (refetch: () => void) => {
+    setRefetchData(() => refetch);
   };
 
   return (
@@ -96,11 +101,13 @@ function DataExplorer() {
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 onToggleFiltersPanel={handleToggleFilters}
+                onRefresh={refetchData}
               />
               <DataView
                 filterConfigs={filterConfigs}
                 searchTerm={searchTerm}
                 setPreviewItem={setPreviewItem}
+                onRefetchReady={handleRefetchReady}
               />
             </Paper>
             {previewItem && (

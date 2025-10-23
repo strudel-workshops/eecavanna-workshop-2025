@@ -1,6 +1,6 @@
 import { Alert, Box, LinearProgress, Skeleton } from '@mui/material';
 import { GridPaginationModel } from '@mui/x-data-grid';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFilters } from '../../../components/FilterContext';
 import { SciDataGrid } from '../../../components/SciDataGrid';
 import { filterData } from '../../../utils/filters.utils';
@@ -11,6 +11,7 @@ interface DataViewProps {
   filterConfigs: FilterConfig[];
   searchTerm: string;
   setPreviewItem: React.Dispatch<React.SetStateAction<any>>;
+  onRefetchReady?: (refetch: () => void) => void;
 }
 /**
  * Query the data rows and render as an interactive table
@@ -19,6 +20,7 @@ export const DataView: React.FC<DataViewProps> = ({
   filterConfigs,
   searchTerm,
   setPreviewItem,
+  onRefetchReady,
 }) => {
   const { activeFilters } = useFilters();
   const [page, setPage] = useState(0);
@@ -28,17 +30,26 @@ export const DataView: React.FC<DataViewProps> = ({
   const dataIdField = 'id';
   // CUSTOMIZE: query mode, 'client' or 'server'
   const queryMode = 'client';
-  const { isPending, isFetching, isError, data, error } = useListQuery({
-    activeFilters,
-    // CUSTOMIZE: the table data source
-    dataSource: 'data/getUsersResponseBody.json',
-    filterConfigs,
-    offset,
-    page,
-    pageSize,
-    queryMode,
-    staticParams: null,
-  });
+  const { isPending, isFetching, isError, data, error, refetch } = useListQuery(
+    {
+      activeFilters,
+      // CUSTOMIZE: the table data source
+      dataSource: 'data/getUsersResponseBody.json',
+      filterConfigs,
+      offset,
+      page,
+      pageSize,
+      queryMode,
+      staticParams: null,
+    }
+  );
+
+  // Notify parent component when refetch function is ready
+  useEffect(() => {
+    if (onRefetchReady && refetch) {
+      onRefetchReady(refetch);
+    }
+  }, [onRefetchReady, refetch]);
 
   const handleRowClick = (rowData: any) => {
     setPreviewItem(rowData.row);

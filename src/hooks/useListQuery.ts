@@ -60,7 +60,7 @@ export const useListQuery = (dataQueryConfig: DataQueryConfig): any => {
       : [dataQueryConfig.dataSource];
 
   // Define query for this page and fetch data items
-  const { isPending, isFetching, isError, data, error } = useQuery({
+  const { isPending, isFetching, isError, data, error, refetch } = useQuery({
     queryKey,
     queryFn: async (): Promise<any> => {
       const queryString = queryParams.toString();
@@ -73,5 +73,5 @@ export const useListQuery = (dataQueryConfig: DataQueryConfig): any => {
     },
     placeholderData: keepPreviousData,
   });
-  return { isPending, isFetching, isError, data, error };
+  return { isPending, isFetching, isError, data, error, refetch };
 };
