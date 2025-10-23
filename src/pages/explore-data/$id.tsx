@@ -1,6 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Box, Container, Paper, Stack, Typography } from '@mui/material';
-import { PageHeader } from '../../components/PageHeader';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import {
+  Box,
+  Container,
+  Paper,
+  Stack,
+  Typography,
+  IconButton,
+  Breadcrumbs,
+  Link as MuiLink,
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import HomeIcon from '@mui/icons-material/Home';
 import { useDetailQuery } from '../../hooks/useDetailQuery';
 
 export const Route = createFileRoute('/explore-data/$id')({
@@ -27,16 +37,51 @@ function DataDetailPage() {
 
   return (
     <Box>
-      <PageHeader
-        // CUSTOMIZE: page header field
-        pageTitle={data ? `${data.firstName} ${data.lastName}` : ''}
-        // CUSTOMIZE: breadcrumb title text
-        breadcrumbTitle="User Detail"
+      <Paper
+        elevation={0}
         sx={{
           marginBottom: 1,
           padding: 2,
         }}
-      />
+      >
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Link to="/explore-data">
+            <IconButton
+              aria-label="back to users list"
+              sx={{
+                color: 'primary.main',
+              }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+          </Link>
+          <Stack spacing={1} flex={1}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <MuiLink
+                component={Link}
+                to="/"
+                underline="hover"
+                color="inherit"
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
+                <HomeIcon />
+              </MuiLink>
+              <MuiLink
+                component={Link}
+                to="/explore-data"
+                underline="hover"
+                color="inherit"
+              >
+                User Management
+              </MuiLink>
+              <Typography color="text.primary">User Details</Typography>
+            </Breadcrumbs>
+            <Typography variant="h4" component="h1">
+              {data ? `${data.firstName} ${data.lastName}` : ''}
+            </Typography>
+          </Stack>
+        </Stack>
+      </Paper>
       <Container maxWidth="xl">
         <Stack>
           {/* CUSTOMIZE: detail page content */}

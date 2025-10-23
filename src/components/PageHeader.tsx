@@ -31,9 +31,6 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             <Link underline="hover" color="inherit" href="/">
               <HomeIcon />
             </Link>
-            <Link underline="hover" color="inherit">
-              ...
-            </Link>
             <Typography color="text.primary">
               {breadcrumbTitle || pageTitle}
             </Typography>

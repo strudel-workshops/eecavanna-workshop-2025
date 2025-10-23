@@ -1,4 +1,11 @@
-import { Alert, Box, LinearProgress, Skeleton } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Chip,
+  LinearProgress,
+  Skeleton,
+  Stack,
+} from '@mui/material';
 import { GridPaginationModel } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { useFilters } from '../../../components/FilterContext';
@@ -123,8 +130,35 @@ export const DataView: React.FC<DataViewProps> = ({
             field: 'roleNames',
             headerName: 'Roles',
             width: 200,
-            valueGetter: (params: any) => {
-              return Array.isArray(params) ? params.join(', ') : params;
+            renderCell: (params: any) => {
+              const roles = params.value;
+              if (!Array.isArray(roles)) return null;
+              return (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    height: '100%',
+                  }}
+                >
+                  <Stack
+                    direction="row"
+                    spacing={0.5}
+                    flexWrap="wrap"
+                    useFlexGap
+                  >
+                    {roles.map((role: string, index: number) => (
+                      <Chip
+                        key={index}
+                        label={role}
+                        size="small"
+                        color="primary"
+                        variant="outlined"
+                      />
+                    ))}
+                  </Stack>
+                </Box>
+              );
             },
           },
         ]}
